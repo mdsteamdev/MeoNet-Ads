@@ -1,4 +1,4 @@
-// ads.js
+// MNA.js
 function loadAds() {
   const overlay = document.createElement("div");
   overlay.id = "overlay";
