@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("filterType:", filterType);
     console.log("filterValue:", filterValue);
 
-    if (!displayType || !filterType || !filterValue) {
+    if (!displayType) {
         console.error('Required data attributes are missing.');
         return;
     }
@@ -68,7 +68,12 @@ document.addEventListener("DOMContentLoaded", function () {
     popup.appendChild(disableTodayBtn);
     console.log("Disable today button created and appended.");
 
-    fetch(`http://localhost:8888/get_ads.php?filter_type=${filterType}&filter_value=${filterValue}`)
+    let fetchUrl = `http://localhost:8888/get_ads.php?filter_type=${filterType}&filter_value=${filterValue}`;
+    if (!filterType || !filterValue) {
+        fetchUrl = "http://localhost:8888/get_ads.php";
+    }
+
+    fetch(fetchUrl)
         .then(response => response.json())
         .then(imageData => {
             console.log("Fetched image data:", imageData);
@@ -104,6 +109,5 @@ document.addEventListener("DOMContentLoaded", function () {
         overlay.style.display = 'none';
     } else {
         overlay.style.display = 'flex';
-        console.log("Overlay displayed.");
     }
 });

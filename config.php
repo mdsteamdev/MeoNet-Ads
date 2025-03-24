@@ -1,8 +1,8 @@
 <?php
 $host = 'localhost';
 $db = 'ad_manager';
-$user = 'root';  // Đảm bảo rằng tên người dùng này đúng
-$pass = '123456';      // Đảm bảo rằng mật khẩu này đúng
+$user = 'root';
+$pass = '123456';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=utf8mb4";
 
@@ -13,5 +13,4 @@ try {
     echo 'Connection failed: ' . $e->getMessage();
     exit;
 }
-
 ?>

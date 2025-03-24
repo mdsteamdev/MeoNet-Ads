@@ -1,26 +1,24 @@
 <?php
-session_start();
 require 'config.php';
+session_start();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = trim($_POST['username']);
+    $password = trim($_POST['password']);
 
-    try {
-        $stmt = $pdo->prepare('SELECT * FROM users WHERE username = ?');
-        $stmt->execute([$username]);
-        $user = $stmt->fetch();
+    // Kiểm tra thông tin đăng nhập
+    $query = 'SELECT id, password FROM users WHERE username = :username';
+    $stmt = $pdo->prepare($query);
+    $stmt->execute(['username' => $username]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($user && password_verify($password, $user['password'])) {
-            $_SESSION['user_id'] = $user['id'];
-            header('Location: admin_dashboard.php');
-            exit;
-        } else {
-            $error = 'Invalid username or password';
-        }
-    } catch (PDOException $e) {
-        echo 'Query failed: ' . $e->getMessage();
+    if ($user && password_verify($password, $user['password'])) {
+        // Lưu thông tin User vào session
+        $_SESSION['user_id'] = $user['id'];
+        header('Location: user_dashboard.php');
         exit;
+    } else {
+        $error = 'Tên đăng nhập hoặc mật khẩu không đúng.';
     }
 }
 ?>
@@ -29,21 +27,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="js/script.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập</title>
 </head>
 <body>
-    <h2>Login</h2>
-    <?php if (isset($error)): ?>
-        <p class="error"><?php echo $error; ?></p>
+    <h1>Đăng nhập</h1>
+    <?php if (!empty($error)): ?>
+        <p style="color: red;"><?php echo $error; ?></p>
     <?php endif; ?>
-    <form method="POST" action="login.php">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-        <button type="submit">Login</button>
+    <form method="POST" action="">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username" required><br><br>
+
+        <label for="password">Mật khẩu:</label><br>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <button type="submit">Đăng nhập</button>
     </form>
 </body>
 </html>

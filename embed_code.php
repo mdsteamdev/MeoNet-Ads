@@ -1,46 +1,29 @@
 <?php
-session_start();
-if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
-    exit;
-}
-
 require 'config.php';
 
-$tags = $pdo->query('SELECT DISTINCT tags FROM ads')->fetchAll();
-$categories = $pdo->query('SELECT DISTINCT category FROM ads')->fetchAll();
-?>
+if (isset($_GET['id'])) {
+    $adId = $_GET['id'];
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Embed Code</title>
-    <link rel="stylesheet" href="http://localhost:8888/css/style.css">
-</head>
-<body>
-    <h2>Generate Embed Code</h2>
-    <form method="POST" action="generate_embed_code.php">
-        <label for="display_type">Display Type:</label>
-        <select id="display_type" name="display_type" required>
-            <option value="popup">Popup</option>
-            <option value="fixed">Fixed</option>
-        </select>
-        <label for="filter_type">Filter By:</label>
-        <select id="filter_type" name="filter_type" required>
-            <option value="tag">Tag</option>
-            <option value="category">Category</option>
-        </select>
-        <label for="filter_value">Filter Value:</label>
-        <select id="filter_value" name="filter_value" required>
-            <?php foreach ($tags as $tag): ?>
-                <option value="<?php echo htmlspecialchars($tag['tags']); ?>"><?php echo htmlspecialchars($tag['tags']); ?></option>
-            <?php endforeach; ?>
-            <?php foreach ($categories as $category): ?>
-                <option value="<?php echo htmlspecialchars($category['category']); ?>"><?php echo htmlspecialchars($category['category']); ?></option>
-            <?php endforeach; ?>
-        </select>
-        <button type="submit">Generate</button>
-    </form>
-</body>
-</html>
+    // Fetch ad details
+    $stmt = $pdo->prepare('SELECT * FROM ads WHERE id = ?');
+    $stmt->execute([$adId]);
+    $ad = $stmt->fetch();
+
+    if ($ad) {
+        // Generate embed code based on ad type
+        $embedCode = '';
+        if ($ad['type'] == 'image') {
+            $embedCode = '<img src="' . htmlspecialchars($ad['file_path']) . '" alt="' . htmlspecialchars($ad['title']) . '">';
+        } elseif ($ad['type'] == 'video') {
+            $embedCode = '<video src="' . htmlspecialchars($ad['file_path']) . '" controls></video>';
+        }
+
+        // Output the embed code
+        echo $embedCode;
+    } else {
+        echo 'Ad not found.';
+    }
+} else {
+    echo 'Invalid request.';
+}
+?>
