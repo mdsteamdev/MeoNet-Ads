@@ -1,132 +1,221 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+/* Theme: Modern & Clean Admin Panel
+    Colors: Facebook Blue #1877F2, Light Gray #f0f2f5, Dark Gray #333
+*/
+
+/* Reset CSS */
+body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, form, fieldset, legend, button {
     margin: 0;
     padding: 0;
 }
 
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5; /* Light Gray */
+    line-height: 1.6;
+    color: #333; /* Dark Gray */
+}
+
+/* Typography */
 h1 {
-    color: #333;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #1877F2; /* Facebook Blue */
     text-align: center;
-    margin-top: 50px;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #1877F2; /* Facebook Blue */
+}
+
+h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.8rem;
 }
 
 p {
-    text-align: center;
-    color: #666;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
 }
 
-footer {
-    text-align: center;
-    margin-top: 50px;
-    color: #999;
+a {
+    color: #1877F2; /* Facebook Blue */
+    text-decoration: none;
 }
 
-#overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    align-items: center;
-    justify-content: center;
-    z-index: 999;
+a:hover {
+    text-decoration: underline;
 }
 
-#popup {
-    background-color: white;
-    border: none;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    position: relative;
-    z-index: 2;
-    animation: fadeIn 0.5s ease-out;
-    border-radius: 8px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    max-width: 467px;
-    margin-top: 20px;
-}
-
-#closeBtn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    font-size: 30px;
-    color: #555;
-    border: none;
-    padding: 0px 10px;
-    border-radius: 50%;
-    transition: opacity 0.3s;
-    z-index: 999;
-    height: 38px;
-    line-height: 38px;
-    text-align: center;
-    opacity: 0.7;
-}
-
-#closeBtn:hover {
-    background-color: #ddd;
-    opacity: 0.5;
-}
-
-#closeBtn i {
-    font-size: 24px;
-    color: #555;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes fadeOut {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
-}
-
-#popup img {
-    max-width: 100%;
-    height: auto;
-    display: block;
+/* Layout */
+.container {
+    max-width: 1200px;
     margin: 0 auto;
+    padding: 2rem;
 }
 
-#adsText {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    font-size: 9.5pt;
-    color: #888;
-    z-index: 999;
-    padding: 2px 5px;
-    border-radius: 3px;
-    opacity: 0.7;
-    transition: opacity 0.3s;
+/* Navigation */
+.navbar {
+    background-color: #1877F2; /* Facebook Blue */
+    color: white;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-#adsText:hover {
-    opacity: 0.5;
+.navbar .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
-#disableTodayBtn {
-    display: block;
-    width: fit-content;
-    margin: 10px auto;
-    padding: 10px 20px;
-    background-color: #f0f0f0;
+.navbar nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.navbar nav ul li {
+    margin-left: 1rem;
+}
+
+.navbar nav ul li a {
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    transition: background-color 0.2s;
+}
+
+.navbar nav ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    background-color: #f0f2f5; /* Light Gray */
+    border-bottom: 1px solid #ddd;
+}
+
+.tabs button {
+    background-color: transparent;
     border: none;
-    border-radius: 5px;
+    outline: none;
     cursor: pointer;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    color: #333; /* Dark Gray */
+    transition: background-color 0.2s, color 0.2s;
 }
+
+.tabs button:hover {
+    background-color: #ddd;
+}
+
+.tabs button.active {
+    background-color: #1877F2; /* Facebook Blue */
+    color: white;
+}
+
+.tabcontent {
+    display: none;
+    padding: 2rem;
+}
+
+/* Forms */
+form {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="url"],
+select,
+textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+input[type="file"] {
+    margin-bottom: 1rem;
+}
+
+button {
+    background-color: #1877F2; /* Facebook Blue */
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #155EAA;
+}
+
+.error {
+    color: red;
+    margin-bottom: 1rem;
+}
+
+/* Tables */
+.table-container {
+    overflow-x: auto;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f0f2f5; /* Light Gray */
+    font-weight: bold;
+}
+
+tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Cards */
+.card {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+/* ... (Thêm các kiểu dáng khác nếu cần) */
